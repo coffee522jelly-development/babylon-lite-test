@@ -28,7 +28,7 @@ const createScene = async function () {
     const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
     light.intensity = 0.7;
 
-    const result = await SceneLoader.ImportMeshAsync("", "https://models.babylonjs.com/", "boombox.glb", scene);
+    const result = await SceneLoader.ImportMeshAsync("", "/", "model.glb", scene);
     const rootMesh = result.meshes[0];
     rootMesh.scaling = new Vector3(20, 20, 20); // Boombox model is tiny
 
@@ -53,6 +53,9 @@ const createScene = async function () {
     } catch (e) {
         console.warn("WebXR is not supported on this device.", e);
     }
+
+    // Set flag for playwright tests to indicate the model has fully loaded
+    (window as any).modelLoaded = true;
 
     return scene;
 };
